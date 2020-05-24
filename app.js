@@ -67,6 +67,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Make the tetromino move down every second
     const timerId = setInterval(moveDown, 500);
 
+    // Assign functions to keycodes
+    function control(e) {
+        if(e.key === 'ArrowLeft') {
+            moveLeft();
+        } else if(e.key === 'ArrowUp') {
+            console.log('Up');
+            // rotate();
+        } else if(e.key === 'ArrowRight') {
+            console.log('Right');
+            moveRight();
+        } else if(e.key === 'ArrowDown') {
+            console.log('Down');
+            moveDown();
+        }
+    }
+    document.addEventListener('keyup', control);
+
     // Move down function
     function moveDown() {
         undraw();
@@ -77,14 +94,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Freeze function
     function freeze() {
-        if(current.some( index => squares[currentPosition + index + width].classList.contains('taken')) ) {
-            current.forEach( index => squares[currentPosition + index].classList.add('taken'));
+        if(current.some( index => squares[currentPosition + index + width].classList.contains('taken') )) {
+            current.forEach( index => squares[currentPosition + index].classList.add('taken') );
             // start a new tetromino falling
             random = Math.floor(Math.random() * theTetrominoes.length)
             current = theTetrominoes[random][currentRotation];
             currentPosition = 4;
             draw();
         }
+    }
+
+    // Move the tetromino left
+    function moveLeft() {
+        undraw();
+        const isAtLeftEdge = current.some( index => (currentPosition + index) % width === 0 );
+
+        if(!isAtLeftEdge) currentPosition -= 1;
+        if(current.some( index => squares[currentPosition + index].classList.contains['taken'])) {
+            currentPosition += 1;
+        }
+        draw();
+    }
+
+    function moveRight() {
+        undraw();
+        const isAtRightEdge = current.some( index => (currentPosition + index) % width === width -1 );
+
+        if(!isAtRightEdge) currentPosition += 1;
+        if(current.some( index => squares[currentPosition + index].classList.contains('taken'))) {
+            currentPosition -= 1;
+        }
+        draw();
     }
 
 });
