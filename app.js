@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const width = 10;
     let nextRandom = 0;
     let timerId;
+    let score = 0;
 
     // The Tetrominoes
     const lTetromino = [
@@ -74,13 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if(e.key === 'ArrowLeft') {
             moveLeft();
         } else if(e.key === 'ArrowUp') {
-            console.log('Up');
             rotate();
         } else if(e.key === 'ArrowRight') {
-            console.log('Right');
             moveRight();
         } else if(e.key === 'ArrowDown') {
-            console.log('Down');
             moveDown();
         }
     }
@@ -105,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPosition = 4;
             draw();
             displayShape();
+            addScore();
         }
     }
 
@@ -113,7 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
         undraw();
         const isAtLeftEdge = current.some( index => (currentPosition + index) % width === 0 );
 
-        if(!isAtLeftEdge) currentPosition -= 1;
+        if(!isAtLeftEdge) {
+            currentPosition -= 1;
+        }
         if(current.some( index => squares[currentPosition + index].classList.contains['taken'])) {
             currentPosition += 1;
         }
@@ -124,7 +125,9 @@ document.addEventListener('DOMContentLoaded', () => {
         undraw();
         const isAtRightEdge = current.some( index => (currentPosition + index) % width === width -1 );
 
-        if(!isAtRightEdge) currentPosition += 1;
+        if(!isAtRightEdge) {
+            currentPosition += 1;
+        }
         if(current.some( index => squares[currentPosition + index].classList.contains('taken'))) {
             currentPosition -= 1;
         }
@@ -179,5 +182,23 @@ document.addEventListener('DOMContentLoaded', () => {
             displayShape();
         }
     });
+
+    // Add score
+    function addScore() {
+        for(let i = 0; i < 199; i+=width) {
+            const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9];
+
+            if(row.every( index => squares[index].classList.contains('taken'))) {
+                score += 10;
+                scoreDisplay.innerHTML = score;
+                row.forEach( index => {
+                    squares[index].classList.remove('taken', 'tetromino');
+                });
+                const squaresRemoved = squares.splice(i, width);
+                squares = squaresRemoved.concat(squares);
+                squares.forEach( cell => grid.appendChild(cell) );
+            }
+        }
+    }
 
 });
