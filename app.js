@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let timerId;
     let score = 0;
     const colours = ['orange', 'red', 'purple', 'green', 'blue'];
+    let gameInPlay = false;
 
     // The Tetrominoes
     const lTetromino = [
@@ -71,14 +72,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Assign functions to keycodes
     function control(e) {
-        if(e.key === 'ArrowLeft') {
-            moveLeft();
-        } else if(e.key === 'ArrowUp') {
-            rotate();
-        } else if(e.key === 'ArrowRight') {
-            moveRight();
-        } else if(e.key === 'ArrowDown') {
-            moveDown();
+        if(gameInPlay) {
+            switch(e.key) {
+                case 'ArrowLeft':
+                    moveLeft(); break;
+                case 'ArrowUp':
+                    rotate(); break;
+                case 'ArrowRight':
+                    moveRight(); break;
+                case 'ArrowDown':
+                    moveDown(); break;
+            }
         }
     }
     document.addEventListener('keyup', control);
@@ -175,7 +179,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if(timerId) {
             clearInterval(timerId);
             timerId = null;
+            gameInPlay = false;
         } else {
+            gameInPlay = true;
             draw();
             timerId = setInterval(moveDown, 500);
             nextRandom = Math.floor(Math.random()*theTetrominoes.length);
@@ -207,6 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(current.some( index => squares[currentPosition + index].classList.contains('taken'))) {
             scoreDisplay.innerHTML = 'end';
             clearInterval(timerId);
+            gameInPlay = false;
         }
     }
 
