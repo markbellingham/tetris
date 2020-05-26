@@ -183,10 +183,10 @@ document.addEventListener('DOMContentLoaded', () => {
             gameInPlay = false;
         } else {
             if(gameEnded) {
-                squares.forEach( square => {
-                    square.classList.remove('tetromino','taken');
-                    square.style.backgroundColor = '';
-                });
+                for(let i = 0; i < 199; i++) {
+                    squares[i].classList.remove('tetromino','taken');
+                    squares[i].style.backgroundColor = '';
+                }
                 gameEnded = false;
                 score = 0;
                 scoreDisplay.innerHTML = score;
