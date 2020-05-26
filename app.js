@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let score = 0;
     const colours = ['orange', 'red', 'purple', 'green', 'blue'];
     let gameInPlay = false;
+    let gameEnded = false;
 
     // The Tetrominoes
     const lTetromino = [
@@ -181,6 +182,15 @@ document.addEventListener('DOMContentLoaded', () => {
             timerId = null;
             gameInPlay = false;
         } else {
+            if(gameEnded) {
+                squares.forEach( square => {
+                    square.classList.remove('tetromino','taken');
+                    square.style.backgroundColor = '';
+                });
+                gameEnded = false;
+                score = 0;
+                scoreDisplay.innerHTML = score;
+            }
             gameInPlay = true;
             draw();
             timerId = setInterval(moveDown, 500);
@@ -213,7 +223,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if(current.some( index => squares[currentPosition + index].classList.contains('taken'))) {
             scoreDisplay.innerHTML = 'end';
             clearInterval(timerId);
+            timerId = null;
             gameInPlay = false;
+            gameEnded = true;
         }
     }
 
