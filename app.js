@@ -139,6 +139,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Rotate the tetromino
     function rotate() {
+        const prev = current.map( x => x );
+        const oldRotation = currentRotation.valueOf();
+
         undraw();
         currentRotation++;
         if(currentRotation === current.length) {
@@ -146,6 +149,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         current = theTetrominoes[random][currentRotation];
         draw();
+
+        // Check if the tetromino has wrapped around the board, and undo if it has
+        const isAtLeftEdge = current.some( index => (currentPosition + index) % width === 0 );
+        const isAtRightEdge = current.some( index => (currentPosition + index) % width === (width - 1) );
+        if(isAtRightEdge && isAtLeftEdge) {
+            undraw();
+            current = prev.map( x => x );
+            currentRotation = oldRotation.valueOf();
+            draw();
+        }
     }
 
     // Show up-next tetromino in mini-grid
@@ -194,7 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
             gameInPlay = true;
             draw();
             timerId = setInterval(moveDown, 500);
-            nextRandom = Math.floor(Math.random()*theTetrominoes.length);
             displayShape();
         }
     });
