@@ -10,20 +10,20 @@
     <title>Basic Tetris</title>
 </head>
 <body>
-<h3>Score: <span id="score">0</span></h3>
-<button id="start-button">Start/Pause</button>
 
-<div class="container">
+<div class="left">
     <div class="grid">
         <script>
             for(let i = 0; i < 200; i++) {
-                document.write('<div></div>');
+                document.write('<div class="main-board"></div>');
             }
             for(let i = 0; i < 10; i++) {
                 document.write('<div class="taken"></div>');
             }
         </script>
     </div>
+</div>
+<div class="right">
 
     <div class="mini-grid">
         <script>
@@ -31,6 +31,12 @@
                 document.write('<div></div>');
             }
         </script>
+    </div>
+
+    <div class="controls">
+        <h3>Score: <span id="score">0</span></h3>
+        <button id="start-button">Start/Pause</button>
+        <button id="high-score">High Scores</button>
     </div>
 </div>
 </body>
