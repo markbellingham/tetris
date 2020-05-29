@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    document.addEventListener('keyup', control);
+    document.addEventListener('keydown', control);
 
     // Move down function
     function moveDown() {
