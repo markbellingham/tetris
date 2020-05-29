@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gameInPlay = false;
         } else {
             if(gameEnded) {
-                for(let i = 0; i < 199; i++) {
+                for(let i = 0; i < 200; i++) {
                     squares[i].classList.remove('tetromino','taken');
                     squares[i].style.backgroundColor = '';
                 }
@@ -234,15 +234,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const gameOverDisplay = document.getElementById('game-over-div');
+    const gameOverCloseBtn = document.getElementById('game-over-close');
+
     // Game over
     function gameOver() {
         if(current.some( index => squares[currentPosition + index].classList.contains('taken'))) {
-            scoreDisplay.innerHTML = 'end';
+            gameOverDisplay.style.display = 'block';
             clearInterval(timerId);
             timerId = null;
             gameInPlay = false;
             gameEnded = true;
         }
     }
+
+    gameOverCloseBtn.addEventListener('click', function() {
+        gameOverDisplay.style.display = 'none';
+    });
 
 });

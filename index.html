@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="app.js" charset="utf-8"></script>
     <link rel="stylesheet" href="style.css"/>
-    <title>Basic Tetris</title>
+    <title>Tetris</title>
 </head>
 <body>
 
@@ -35,9 +35,14 @@
 
     <div class="controls">
         <h3>Score: <span id="score">0</span></h3>
-        <button id="start-button">Start/Pause</button>
-        <button id="high-score">High Scores</button>
+        <button id="start-button" class="btn btn-default">Start/Pause</button>
+        <button id="high-score" class="btn btn-default">High Scores</button>
+        <button id="instructions" class="btn">Instructions</button>
     </div>
+</div>
+<div id="game-over-div">
+    <h3>Game Over</h3>
+    <button id="game-over-close">Close</button>
 </div>
 </body>
 </html>
