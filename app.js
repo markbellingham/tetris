@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const colours = ['orange', 'red', 'purple', 'green', 'blue'];
     let gameInPlay = false;
     let gameEnded = false;
+    let interval = 500;
+    const topScores = [];
 
     // The Tetrominoes
     const lTetromino = [
@@ -206,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             gameInPlay = true;
             draw();
-            timerId = setInterval(moveDown, 500);
+            timerId = setInterval(moveDown, interval);
             displayShape();
         }
     });
@@ -235,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const gameOverDisplay = document.getElementById('game-over-div');
-    const gameOverCloseBtn = document.getElementById('game-over-close');
+    const closeBtn = document.querySelectorAll('.close-btn');
 
     // Game over
     function gameOver() {
@@ -248,8 +250,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    gameOverCloseBtn.addEventListener('click', function() {
-        gameOverDisplay.style.display = 'none';
+    // close any open modals
+    closeBtn.forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.modal').forEach(el => {
+                el.style.display = 'none';
+            });
+        });
     });
+
+    document.getElementById('instructions-button').addEventListener('click', function() {
+        document.getElementById('instructions-div').style.display = 'block';
+    })
 
 });

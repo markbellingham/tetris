@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="app.js" charset="utf-8"></script>
     <link rel="stylesheet" href="style.css"/>
+    <script src="https://kit.fontawesome.com/0825dd3daf.js" crossorigin="anonymous"></script>
     <title>Tetris</title>
 </head>
 <body>
@@ -36,13 +37,37 @@
     <div class="controls">
         <h3>Score: <span id="score">0</span></h3>
         <button id="start-button" class="btn btn-default">Start/Pause</button>
-        <button id="high-score" class="btn btn-default">High Scores</button>
-        <button id="instructions" class="btn">Instructions</button>
+        <button id="instructions-button" class="btn">Instructions</button>
     </div>
 </div>
-<div id="game-over-div">
+<div id="game-over-div" class="modal">
+    <h3 id="congrats-message"></h3>
     <h3>Game Over</h3>
-    <button id="game-over-close">Close</button>
+    <button id="game-over-close" class="close-btn">Close</button>
+</div>
+<div id="instructions-div" class="modal">
+    <h3>Instructions</h3>
+    <p>Position the falling blocks so that they form complete lines without gaps.</p>
+    <p>If the stack reaches the top of the board the game is over.</p>
+    <h5>Controls</h5>
+    <p>
+        <i class="fas fa-caret-up"></i> - Rotate
+    </p>
+    <p>
+        <i class="fas fa-caret-right"></i> - Move Right
+    </p>
+    <p>
+        <i class="fas fa-caret-left"></i> - Move Left
+    </p>
+    <p>
+        <i class="fas fa-caret-down"></i> - Move Down
+    </p>
+    <h5>Scoring</h5>
+    <p>1 line - 10 points</p>
+    <p>2 lines - 25 points</p>
+    <p>3 lines - 40 points</p>
+    <p>4 lines - 60 points</p>
+    <button class="close-btn">Close</button>
 </div>
 </body>
 </html>
