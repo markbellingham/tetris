@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let gameInPlay = false;
     let gameEnded = false;
     let interval = 500;
-    const topScores = [];
+    const topScores = JSON.parse(localStorage.getItem('tetris')) || [];
+    showTopScores();
 
     // The Tetrominoes
     const lTetromino = [
@@ -244,10 +245,26 @@ document.addEventListener('DOMContentLoaded', () => {
         if(current.some( index => squares[currentPosition + index].classList.contains('taken'))) {
             gameOverDisplay.style.display = 'block';
             clearInterval(timerId);
+            const date = new Date();
+            topScores.push({date: date.toISOString().split('T')[0], score: score});
+            showTopScores();
             timerId = null;
             gameInPlay = false;
             gameEnded = true;
         }
+    }
+
+    function showTopScores() {
+        topScores.sort(( a, b ) => b.score - a.score );
+        localStorage.tetris = JSON.stringify(topScores);
+        const topTen = topScores.filter((item, index) => index < 10);
+        let markup = '';
+        topTen.forEach( s => {
+            markup += `
+            <p>${s.date} - ${s.score}</p>
+            `;
+        });
+        document.querySelector('#top-scores').innerHTML = markup;
     }
 
     // close any open modals
