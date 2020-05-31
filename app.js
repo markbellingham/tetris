@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let interval = 500;
     const topScores = JSON.parse(localStorage.getItem('tetris')) || [];
     showTopScores();
+    let level = 1;
 
     // The Tetrominoes
     const lTetromino = [
@@ -243,28 +244,42 @@ document.addEventListener('DOMContentLoaded', () => {
     // Game over
     function gameOver() {
         if(current.some( index => squares[currentPosition + index].classList.contains('taken'))) {
-            gameOverDisplay.style.display = 'block';
             clearInterval(timerId);
-            const date = new Date();
-            topScores.push({date: date.toISOString().split('T')[0], score: score});
-            showTopScores();
+            const date = getDate();
+            const scoreInfo = {date: date, score: score, level: level};
+            topScores.push(scoreInfo);
+            const position = showTopScores(scoreInfo);
+            document.querySelector('#congrats-message').innerHTML = position > -1 ? `Congrats! #${position} score!` : '';
+            gameOverDisplay.style.display = 'block';
             timerId = null;
             gameInPlay = false;
             gameEnded = true;
         }
     }
 
-    function showTopScores() {
+    function getDate() {
+        let date = new Date();
+        date = date.toISOString().split('T')[0];
+        date = date.split('-');
+        date = `${date[2]}-${date[1]}-${date[0]}`;
+        return date;
+    }
+
+    function showTopScores(scoreInfo) {
         topScores.sort(( a, b ) => b.score - a.score );
+        const index = topScores.findIndex( s => s === scoreInfo );
         localStorage.tetris = JSON.stringify(topScores);
-        const topTen = topScores.filter((item, index) => index < 10);
+        const topTen = topScores.filter((item, index) => index < 5);
         let markup = '';
         topTen.forEach( s => {
             markup += `
-            <p>${s.date} - ${s.score}</p>
+            <tr>
+                <td class="scores">${s.date}</td><td class="scores">${s.level}</td><td class="scores">${s.score}</td>
+            </tr>
             `;
         });
         document.querySelector('#top-scores').innerHTML = markup;
+        return index + 1;
     }
 
     // close any open modals

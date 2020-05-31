@@ -25,10 +25,10 @@
     </div>
 </div>
 <div class="right">
-
+    <h3>Next Piece</h3>
     <div class="mini-grid">
         <script>
-            for(let i = 0; i < 20; i++) {
+            for(let i = 0; i < 16; i++) {
                 document.write('<div></div>');
             }
         </script>
@@ -38,8 +38,21 @@
         <h3>Score: <span id="score">0</span></h3>
         <button id="start-button" class="btn btn-default">Start/Pause</button>
         <button id="instructions-button" class="btn">Instructions</button>
-        <h5>Top Scores</h5>
-        <div id="top-scores"></div>
+        <h3>Top Scores</h3>
+        <div>
+            <table>
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Level</th>
+                    <th>Score</th>
+                </tr>
+                </thead>
+                <tbody id="top-scores">
+
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
