@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let nextRandom = 0;
     let timerId;
     let score = 0;
-    const colours = ['orange', 'red', 'grey', 'purple', 'green', 'blue'];
+    const colours = ['orange', 'blue', 'green', 'red', 'purple', 'yellow', 'cyan'];
     let gameInPlay = false;
     let gameEnded = false;
     let interval = 500;
@@ -22,6 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
         [1, width+1, width*2+1, width*2],
         [width, width*2, width*2+1, width*2+2]
     ];
+
+    const jTetromino = [
+        [1, width+1, width*2, width*2+1],
+        [0, width, width+1, width+2],
+        [0, 1, width, width*2],
+        [0, 1, 2, width+2]
+
+    ]
 
     const sTetromino = [
         [0, width, width+1, width*2+1],
@@ -58,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [width, width+1, width+2, width+3]
     ];
 
-    const theTetrominoes = [lTetromino, sTetromino, zTetromino, tTetromino, oTetromino, iTetromino];
+    const theTetrominoes = [lTetromino, jTetromino, sTetromino, zTetromino, tTetromino, oTetromino, iTetromino];
     let currentPosition = 4;
     let currentRotation = 0;
 
@@ -180,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // The Tetrominoes without rotations
     const upNextTetrominoes = [
         [1, displayWidth+1, displayWidth*2+1, 2], // lTetromino
+        [1, displayWidth+1, displayWidth*2, displayWidth*2+1], //jTetromino
         [0, displayWidth, displayWidth+1, displayWidth*2+1], // sTetromino
         [displayWidth, displayWidth+1, displayWidth*2+1, displayWidth*2+2], // zTetromino
         [1, displayWidth, displayWidth+1, displayWidth+2], // tTetromino
