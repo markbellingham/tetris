@@ -17,10 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // The Tetrominoes
     const lTetromino = [
-        [1, width+1, width*2+1, 2],
-        [width, width+1, width+2, width*2+2],
-        [1, width+1, width*2+1, width*2],
-        [width, width*2, width*2+1, width*2+2]
+        [0, width, width*2, width*2+1],
+        [0, 1, 2, width],
+        [0, 1, width+1, width*2+1],
+        [2, width, width+1, width+2]
     ];
 
     const jTetromino = [
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const scoreInfo = {date: date, score: score, level: level};
             topScores.push(scoreInfo);
             const position = showTopScores(scoreInfo);
-            document.querySelector('#congrats-message').innerHTML = position > -1 ? `Congrats! #${position} score!` : '';
+            document.querySelector('#congrats-message').innerHTML = position > -1 ? `Congrats! #${position + 1} score!` : '';
             gameOverDisplay.style.display = 'block';
             timerId = null;
             gameInPlay = false;
@@ -284,11 +284,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showTopScores(scoreInfo) {
         topScores.sort(( a, b ) => b.score - a.score );
-        const index = topScores.findIndex( s => s === scoreInfo );
-        localStorage.tetris = JSON.stringify(topScores);
-        const topTen = topScores.filter((item, index) => index < 5);
+        const topFive = topScores.filter((item, index) => index < 5);
+        const index = topFive.findIndex( s => s === scoreInfo );
+        localStorage.tetris = JSON.stringify(topFive);
         let markup = '';
-        topTen.forEach( s => {
+        topFive.forEach( s => {
             markup += `
             <tr>
                 <td class="scores">${s.date}</td><td class="scores">${s.level}</td><td class="scores">${s.score}</td>
@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         });
         document.querySelector('#top-scores').innerHTML = markup;
-        return index + 1;
+        return index;
     }
 
     // close any open modals
