@@ -259,8 +259,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 draw();
             }
         }
-        if(lines > 0 && lines % 20 === 0) {
-            lines = 0;
+        if(lines >= 20) {
+            lines = lines - 20;
             level++;
             document.getElementById('level').innerHTML = level.toString();
             setSpeed();
