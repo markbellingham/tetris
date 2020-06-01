@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
         topFive.forEach( s => {
             markup += `
             <tr>
-                <td class="scores">${s.date}</td><td class="scores">${s.level}</td><td class="scores">${s.score}</td>
+                <td class="scores" nowrap="nowrap">${s.date}</td><td class="scores">${s.level}</td><td class="scores">${s.score}</td>
             </tr>
             `;
         });

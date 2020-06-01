@@ -17,6 +17,7 @@ body {
 }
 
 .scores {
+    width: 100px;
     text-align: right;
     font-size: 0.9em;
 }
