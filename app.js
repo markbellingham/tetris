@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const colours = ['orange', 'blue', 'green', 'red', 'purple', 'yellow', 'cyan'];
     let gameInPlay = false;
     let gameEnded = false;
-    let interval = 500;
     const topScores = JSON.parse(localStorage.getItem('tetris')) || [];
     showTopScores();
     let level = 1;
+    let lines = 0;
 
     // The Tetrominoes
     const lTetromino = [
@@ -187,8 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // The Tetrominoes without rotations
     const upNextTetrominoes = [
-        [1, displayWidth+1, displayWidth*2+1, 2], // lTetromino
-        [1, displayWidth+1, displayWidth*2, displayWidth*2+1], //jTetromino
+        [1, displayWidth+1, displayWidth*2+1, displayWidth*2+2], // lTetromino
+        [1, displayWidth+1, displayWidth*2+1, 2], // jTetromino
         [0, displayWidth, displayWidth+1, displayWidth*2+1], // sTetromino
         [displayWidth, displayWidth+1, displayWidth*2+1, displayWidth*2+2], // zTetromino
         [1, displayWidth, displayWidth+1, displayWidth+2], // tTetromino
@@ -227,10 +227,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             gameInPlay = true;
             draw();
-            timerId = setInterval(moveDown, interval);
+            setSpeed();
             displayShape();
         }
     });
+
+    function setSpeed() {
+        clearInterval(timerId);
+        timerId = setInterval(moveDown, (Math.log10(Math.pow(level,-0.5))+1)*1000);
+    }
 
     // Add score
     function addScore() {
@@ -240,6 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if(row.every( index => squares[index].classList.contains('taken'))) {
                 score += 10 + multiple;
+                lines++;
                 multiple += 5;
                 scoreDisplay.innerHTML = score;
                 undraw();
@@ -252,6 +258,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 squares.forEach( cell => grid.appendChild(cell) );
                 draw();
             }
+        }
+        if(lines > 0 && lines % 20 === 0) {
+            lines = 0;
+            level++;
+            document.getElementById('level').innerHTML = level.toString();
+            setSpeed();
         }
     }
 

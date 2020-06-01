@@ -51,7 +51,8 @@ body {
 }
 
 .mini-grid div {
-    /*border: 1px solid lightgray;*/
+    border: 1px solid white;
+    margin-top: -10px;
     height: 20px;
     width: 20px;
 }
@@ -87,4 +88,8 @@ body {
 
 #congrats-message {
     color: red;
+}
+
+h5 {
+    margin-top: -10px;
 }
